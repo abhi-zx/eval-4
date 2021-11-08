@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>List of Items</h3>
+    <div id='show'class="shows"></div>
+    <button id='btn'>CheckOut</button>
+
+    <script>
+        var show = document.getElementById('show');
+         var lcitem = JSON.parse(localStorage.getItem('foods'));
+         lcitem.forEach(function(p){
+             var p = document.createElement('p')
+             p.textContent =   p.categories;
+             show.append(p)
+         })
+ var btn =document.getElementById('btn');
+ btn.addEventListener('click', check)
+ function check() {
+   setTimeout(function(){ alert("Your order is being cooked "); }, 3000);
+         setTimeout(function(){ alert("Your order is ready "); }, 8000);
+         setTimeout(function(){ alert("Order out for delivery"); }, 12000);
+ }
+      
+    </script>
+</body>
+</html>

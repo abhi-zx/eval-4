@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width:30%;
+        }
+        .box{
+            width:300px;
+            height: 100px;
+            overflow:scroll;
+        }
+      .tex{
+    font-size:20px;
+    color: rgb(223, 233, 225);
+    background: black;
+      } 
+      .cr{
+          display: flex;
+          justify-content: space-between;
+          cursor: pointer;
+      }
+    </style>
+</head>
+<body>
+    <div class="cr">
+        <h1> Food Items</h1>
+        <h3 id='cart'>Show Cart</h1>
+    </div>
+   
+    <div id='show' class="div">
+    </div>
+    <script>
+function getdata(){
+    if(localStorage.getItem('foods')==null){
+            localStorage.setItem('foods',JSON.stringify([]))
+        }
+    var show=document.getElementById('show');
+            fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`).then((res)=>{
+                return res.json();
+            }).then((res)=>{
+                console.log(res);
+                for(key in res.categories){
+                  var img=document.createElement('img');
+                  img.src=res.categories[key].strCategoryThumb 
+                  var div2=document.createElement('div');
+                  div2.setAttribute('class','box')
+                   var p = document.createElement('p')
+                   p.setAttribute('class','tex')
+                   p.textContent=res.categories[key].strCategory;
+
+                   var p2 = document.createElement('p2');
+
+                   p2.textContent=res.categories[key].strCategoryDescription;
+                   div2.append(p2)
+    var button = document.createElement('button');
+    button.innerText='Add to cart'
+    button.addEventListener('click', function(){
+        add(res.categories[key])
+    })
+    function add(str) {
+        var lcitem = JSON.parse(localStorage.getItem('foods'));
+        lcitem.push(str);
+        localStorage.setItem('foods',JSON.stringify(lcitem))
+    //    console.log(lcitem)
+             alert('added to cart')
+           
+    }
+                   var hr = document.createElement('hr');
+                    show.append(img,p,div2,button,hr)
+                }
+            })
+        }
+        getdata();
+        var cart= document.getElementById('cart');
+        cart.addEventListener('click', car)
+        function car() {
+            window.location.href='cart.html';
+        }
+    </script>
+    
+</body>
+</html>

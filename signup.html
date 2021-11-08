@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #signup form{
+            display:flex;
+            flex-direction: column;
+        }
+        form input{
+            width:200px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Signup</h1>
+   
+    <div id="signup">
+        <form onsubmit="Signup(event)"id="signup_form">
+            <input id='name' type="text"  placeholder="Name"/>
+            <input id='email' type="text"  placeholder="Email"/>
+            <input id='password' type="text" placeholder="Password"/>
+            <input id='username' type="text" placeholder="Username"/>
+            <input id='mobile' type="text" placeholder="mobile"/>
+            <input id='description' type="text" placeholder="description"/>
+           
+            <input type="submit"/>
+
+        </form>
+    </div>
+    <script>
+        function Signup(e){
+            e.preventDefault();
+            let form =document.getElementById('signup_form');
+            var fname = document.getElementById('name').value;
+            var femail = document.getElementById('email').value;
+            var fpassword = document.getElementById('password').value;
+            var fusername = document.getElementById('username').value;
+            var fmobile = document.getElementById('mobile').value;
+            var fdescription = document.getElementById('description').value;
+            let user_data  ={
+                name: fname,
+                email: femail,
+                password: fpassword,
+                username: fusername,
+                mobile: fmobile,
+                description: fdescription,
+            };
+            let data_to_send = JSON.stringify(user_data);
+
+            fetch('https://masai-api-mocker.herokuapp.com/auth/register',{
+                method: 'POST',
+                body: data_to_send,
+                headers: {
+                    "Content-Type":"application/json",
+                },
+            })
+            .then((res)=>{
+                return res.json();
+            })
+            .then((res)=>{
+                console.log(res);
+                var str = res.message
+                if(str=='Registration Success')
+               {
+                window.location.href='index.html'
+               }
+               
+            }).catch((err)=>{
+                // console.log(err);
+                // console.log(err.message+" "+'anny1');
+                console.log('apple')
+            })
+        }
+    </script>
+</body>
+</html>
